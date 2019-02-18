@@ -20,7 +20,9 @@ class AMS_Client():
         self.logger = logger if logger else logging.getLogger('AMS_Client')
         self.logger.setLevel(logger_level)
         self.sid = None
-        
+        self.portfolios = [x['id'] for x in self.get_portfolios()['portfolios']]
+        self.asset_units = [x['id'] for x in self.get_asset_units()['asset_units']]
+    
     def login(self):
         self.logger.info("Try login. Username {}".format(self.username))
         
@@ -45,12 +47,12 @@ class AMS_Client():
     
     def get_asset_units(self):
         return self._do(self._get_asset_units)
-    
+     
     def get_asset_unit_positions(self,asset_unit_id,date):
         return self._do(self._get_asset_unit_positions,asset_unit_id,date)
     
-    
-    
+    def apply_trades(self,portfolio_id,trades,asset_type):
+        return self._do(self._apply_trades,portfolio_id,trades,asset_type)
     
     def _get_portfolios(self,limit=100,view='summary'):
         portfolio_url = '{}/api/rqams/v1/portfolios'.format(self.base_url)
@@ -94,9 +96,43 @@ class AMS_Client():
         r = requests.get(trades_url,params=params,cookies=cookies)
         return r.json()
     
-    def _apply_trade(self,trade):
-        trade
-    
+    def _apply_trades(self,portfolio_id,trades,asset_type):
+        url = '{}/api/rqams/v1/portfolios/{}/trades'.format(self.base_url,portfolio_id)
+        cookies = dict(sid=self.sid)
+        for t in range(len(trades)):
+            trade = trade.iloc[t]
+            payload = dict(
+                datetime = trade.datetime,
+                order_book_id = trade.order_book_id,
+                symbol = trade.symbol,
+                asset_type = asset_type,
+                side = trade.side,
+                last_quantity = int(trade.last_quantity),
+                #JSON无法识别int64
+                last_price = trade.last_price,
+                transaction_cost = trade.transaction_cost
+            )
+            r = requests.post(url,json=payload,cookies=cookies)
+        return 
+
+    def _portfolio_snapshot(self, portfolio_id):
+        url = '{}/api/rqams/v1/portfolios/{}/current_snapshot'.format(self.base_url,portfolio_id)
+        cookies = dict(sid=self.sid)
+        params = dict(view='detail',aggregation_key='asset_type')
+        r = requests.get(url,params=params,cookies=cookies)
+        return r.json()
+
+    def _asset_unit_snapshot(self,asset_unit_id):
+        url = '{}/api/rqams/v1/asset_units/{}/current_snapshot'.format(self.base_url,asset_unit_id)
+        cookies = dict(sid=self.sid)
+        params = dict(view='detail',aggregation_key='asset_type')
+        r = requests.get(url,params=params,cookies=cookies)
+        return r.json()
+
+            
+
+
+
 # #获取资产单元交易流水
 # def get_asset_positions(cookies,assetid,date,view='detail'):
 #     holding_url = 'http://rqams.com/api/rqams/v1/asset_units/{}/holdings?'.format(assetid)
