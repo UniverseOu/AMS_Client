@@ -50,9 +50,25 @@ class AMS_Client():
      
     def get_asset_unit_positions(self,asset_unit_id,date):
         return self._do(self._get_asset_unit_positions,asset_unit_id,date)
+
+    def get_portfolios_positions(self, portfolio_id,date):
+        return self._do(self._get_portfolio_positions,portfolio_id,date)
+    
+
+    def get_asset_trades(self,asset_unit_id,start_date,end_date):
+        return self._do(self._get_asset_trades,portfolio_id,start_date,end_date)
+    
+    def get_portfolio_trades(self,portfolio_id,start_date,end_date):
+        return self._do(self._get_portfolio_trades,portfolio_id,start_date,end_date)
     
     def apply_trades(self,portfolio_id,trades,asset_type):
         return self._do(self._apply_trades,portfolio_id,trades,asset_type)
+    
+    def portfolio_snapshot(self, portfolio_id):
+        return self._do(self._portfolio_snapshot,portfolio_id)
+    
+    def asset_unit_snapshot(self, asset_unit_id):
+        return self._do(self._asset_unit_snapshot,asset_unit_id)
     
     def _get_portfolios(self,limit=100,view='summary'):
         portfolio_url = '{}/api/rqams/v1/portfolios'.format(self.base_url)
