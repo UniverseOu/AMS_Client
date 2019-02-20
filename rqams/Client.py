@@ -13,7 +13,7 @@ import functools
 
 class AMS_Client():
     def __init__(self,username,password,logger=None,logger_level=logging.DEBUG,
-                 base_url='http://rqams.com'):
+                 base_url='http://rqams.ricequant.com'):
         self.username = username
         self.password = password
         self.base_url = base_url
@@ -110,7 +110,7 @@ class AMS_Client():
     
     def _get_asset_trades(self,asset_unit_id,start_date,end_date):
         trades_url = '{}/api/rqams/v1/asset_units/{}/trades?'.format(self.base_url,asset_unit_id)
-        params = dict(start_date = date,end_date = end_date)
+        params = dict(start_date = start_date,end_date = end_date)
         cookies = dict(sid=self.sid)
         r = requests.get(trades_url,params=params,cookies=cookies)
         return r.json()
