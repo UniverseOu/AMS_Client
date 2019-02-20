@@ -66,7 +66,7 @@ class AMS_Client():
     
 
     def get_asset_trades(self,asset_unit_id,start_date,end_date):
-        return self._do(self._get_asset_trades,portfolio_id,start_date,end_date)
+        return self._do(self._get_asset_trades,asset_unit_id,start_date,end_date)
     
     def get_portfolio_trades(self,portfolio_id,start_date,end_date):
         return self._do(self._get_portfolio_trades,portfolio_id,start_date,end_date)
