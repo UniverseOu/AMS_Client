@@ -1,0 +1,12 @@
+MANIFEST.in
+README.md
+requirements.txt
+setup.py
+RQAMS.egg-info/PKG-INFO
+RQAMS.egg-info/SOURCES.txt
+RQAMS.egg-info/dependency_links.txt
+RQAMS.egg-info/not-zip-safe
+RQAMS.egg-info/requires.txt
+RQAMS.egg-info/top_level.txt
+rqams/Client.py
+rqams/__init__.py

@@ -43,9 +43,19 @@ class AMS_Client():
         return resp
     
     def get_portfolios(self):
+        '''
+        List
+        login required
+        get all your portfolio_ids
+        '''
         return self._do(self._get_portfolios)
     
     def get_asset_units(self):
+        '''
+        List
+        login required
+        get all your asset_unit_ids
+        '''
         return self._do(self._get_asset_units)
      
     def get_asset_unit_positions(self,asset_unit_id,date):
@@ -116,7 +126,7 @@ class AMS_Client():
         url = '{}/api/rqams/v1/portfolios/{}/trades'.format(self.base_url,portfolio_id)
         cookies = dict(sid=self.sid)
         for t in range(len(trades)):
-            trade = trade.iloc[t]
+            trade = trades.iloc[t]
             payload = dict(
                 datetime = trade.datetime,
                 order_book_id = trade.order_book_id,
@@ -129,6 +139,7 @@ class AMS_Client():
                 transaction_cost = trade.transaction_cost
             )
             r = requests.post(url,json=payload,cookies=cookies)
+            print(r.json())
         return 
 
     def _portfolio_snapshot(self, portfolio_id):
