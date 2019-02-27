@@ -101,7 +101,7 @@ class AMS_Client():
         r = requests.get(holding_url,params=params,cookies=cookies)
         return r.json()
     
-    def _get_portfolios_positions(self,portfolio_id,date,view='detail'):
+    def _get_portfolio_positions(self,portfolio_id,date,view='detail'):
         holding_url = '{}/api/rqams/v1/portfolios/{}/holdings?'.format(self.base_url,portfolio_id)
         params = dict(date = date,view = view)
         cookies = dict(sid=self.sid)

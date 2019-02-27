@@ -13,7 +13,8 @@ end_date = '20190203'
 
 print(client.asset_units)
 print(client.portfolios)
-print(client.get_asset_trades(portfolio,start_date=start_date,end_date=end_date))
-print(client.get_portfolio_trades(asset_unit,start_date=start_date,end_date=end_date))
-print(client.get_asset_unit_positions(asset_unit,date=end_date))
-print(client.get_portfolios_positions(portfolio,date=end_date))
+print(client.get_asset_trades(asset_unit,start_date=start_date,end_date=end_date))
+print(client.get_portfolio_trades(portfolio,start_date=start_date,end_date=end_date))
+# print(client.get_asset_unit_positions(asset_unit,date=end_date)
+# )
+# print(client.get_portfolios_positions(portfolio,date=end_date))
