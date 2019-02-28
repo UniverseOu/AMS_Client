@@ -71,7 +71,7 @@ client.get_asset_trades(asset_id,start_date,end_date)
 ```python
 client.get_asset_unit_positions('5c75f6be713b78006e01c0cd',date='20190101')
 ```
-获取组合的持仓情况
+同理，获取组合的持仓情况
 ```python
 client.get_portfolio_positions(portfolio_id,date)
 ```
@@ -85,5 +85,40 @@ datetime	order_book_id	symbol	side	last_quantity	last_price	transaction_cost
 ```
 ```python
 client.apply_trades(data)
+```
+获取资产单元的实时情况
+```
+client.asset_unit_snapshot(asset_unit_id)
+```
+```python
+{'unit_net_value': 1.0367979784171286,
+ 'total_equity': 10367979.784171287,
+ 'market_value': 1279233.9921712875,
+ 'exposure': 0.12338314877159424,
+ 'day_pnl': -3516.005126953125,
+ 'cash': 9088745.792,
+ 'static_unit_net_value': 1.0371495791999998,
+ 'aggregations': [{'key': 'stock',
+   'positions': [{'order_book_id': '601398.XSHG',
+     'portfolio': '5c75098b5cd90e0c0f2b1fbb',
+     'asset_type': 'stock',
+     'direction': 'long',
+     'quantity': 21600,
+     'last_price': 5.739999771118164,
+     'cost_price': 4.357122421264648,
+     'cost': 94113.84,
+     'day_pnl': -1512.0047607421875,
+     'floating_pnl': 29870.150390625,
+     'price_change': -0.07000017166137695,
+     'price_change_rate': -0.012048222124576569,
+     'market_value': 123983.99505615234,
+     'avg_price': 4.357122421264648,
+     'weight': 0.011958356173247727,
+     'symbol': '工商银行',
+     'timestamp': '2019-02-28 14:52:40'},
+```
+获取组合的实时情况
+```
+client.portfolio(portfolio_id)
 ```
 
