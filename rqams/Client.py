@@ -80,6 +80,9 @@ class AMS_Client():
     def asset_unit_snapshot(self, asset_unit_id):
         return self._do(self._asset_unit_snapshot,asset_unit_id)
     
+    def asset_unit_indicator(self, asset_unit_id, start_date, end_date, benchmark):
+        return self._do(self._asset_unit_indicator, asset_unit_id, start_date, end_date, benchmark)
+
     def _get_portfolios(self,limit=100,view='summary'):
         portfolio_url = '{}/api/rqams/v1/portfolios'.format(self.base_url)
         params = dict(limit = limit,view = view)
@@ -156,6 +159,13 @@ class AMS_Client():
         r = requests.get(url,params=params,cookies=cookies)
         return r.json()
 
+    def _asset_unit_indicator(self, asset_unit_id, start_date, end_date, benchmark=('index,000300.XSHG')):
+        indicators_url = '{}/api/rqams/v1/asset_units/{}/indicators?'.format(
+            self.base_url, asset_unit_id)
+        params = dict(start_date=start_date, end_date=end_date,benchmark = benchmark)
+        cookies = dict(sid=self.sid)
+        r = requests.get(indicators_url, params=params, cookies=cookies)
+        return r.json()
             
 
 
